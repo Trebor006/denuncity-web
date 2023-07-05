@@ -1,121 +1,188 @@
-// import userThree from '../images/user/user-03.png';
+import React, { useState } from "react";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Funcionario = () => {
+    const [nombre, setNombre] = useState("");
+    const [apellido, setApellido] = useState("");
+    const [ci, setCI] = useState("");
+    const [celular, setCelular] = useState("");
+    const [correo, setCorreo] = useState("");
+
+    const handleNombreChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setNombre(event.target.value);
+    };
+
+    const handleApellidoChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setApellido(event.target.value);
+    };
+
+    const handleCIChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setCI(event.target.value);
+    };
+
+    const handleCelularChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setCelular(event.target.value);
+    };
+
+    const handleCorreoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setCorreo(event.target.value);
+    };
+
+    const handleGuardarClick = async () => {
+        if (
+            nombre === "" ||
+            apellido === "" ||
+            ci === "" ||
+            celular === "" ||
+            correo === ""
+        ) {
+            toast.error("Por favor, complete todos los campos");
+            return;
+        }
+
+        try {
+            const funcionarioData = {
+                nombre,
+                apellido,
+                ci,
+                celular,
+                correo,
+            };
+
+            // Enviar los datos al servidor
+            const response = await axios.post(
+                "http://localhost:3001/funcionario/registrar",
+                funcionarioData
+            );
+
+            toast.success("Funcionario registrado exitosamente");
+            console.log("Respuesta del servidor:", response.data);
+
+            // Restablecer los valores del formulario
+            setNombre("");
+            setApellido("");
+            setCI("");
+            setCelular("");
+            setCorreo("");
+        } catch (error) {
+            toast.error("Error al guardar el funcionario");
+            console.error("Error al guardar el funcionario:", error);
+        }
+    };
+
     return (
         <div className="mx-auto max-w-270">
-
             <div className="grid grid-cols-5 gap-8">
                 <div className="col-span-5 xl:col-span-3">
-                    <div
-                        className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                         <div className="p-7">
-                            <form action="#">
+                            <form>
                                 <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
                                     <div className="w-full sm:w-1/2">
                                         <label
-                                            className="mb-3 block text-sm font-medium text-black dark:text-white"
                                             htmlFor="name"
+                                            className="mb-3 block text-sm font-medium text-black dark:text-white"
                                         >
                                             Nombre
                                         </label>
                                         <input
-                                            className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                             type="text"
-                                            name="name"
                                             id="name"
+                                            value={nombre}
+                                            onChange={handleNombreChange}
+                                            className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                             placeholder="Nombre"
-                                            defaultValue=""
                                         />
                                     </div>
                                     <div className="w-full sm:w-1/2">
                                         <label
-                                            className="mb-3 block text-sm font-medium text-black dark:text-white"
                                             htmlFor="lastname"
+                                            className="mb-3 block text-sm font-medium text-black dark:text-white"
                                         >
                                             Apellido
                                         </label>
                                         <input
-                                            className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                             type="text"
-                                            name="lastname"
                                             id="lastname"
+                                            value={apellido}
+                                            onChange={handleApellidoChange}
+                                            className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                             placeholder="Apellido"
-                                            defaultValue=""
                                         />
                                     </div>
                                 </div>
-
                                 <div className="mb-5.5">
                                     <label
-                                        className="mb-3 block text-sm font-medium text-black dark:text-white"
                                         htmlFor="ci"
+                                        className="mb-3 block text-sm font-medium text-black dark:text-white"
                                     >
                                         CI:
                                     </label>
                                     <div className="relative">
-
                                         <input
-                                            className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                             type="text"
-                                            name="ci"
                                             id="ci"
+                                            value={ci}
+                                            onChange={handleCIChange}
+                                            className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                             placeholder="# de Carnet"
-                                            defaultValue=""
                                         />
                                     </div>
                                 </div>
-
                                 <div className="mb-5.5">
                                     <label
-                                        className="mb-3 block text-sm font-medium text-black dark:text-white"
                                         htmlFor="celular"
+                                        className="mb-3 block text-sm font-medium text-black dark:text-white"
                                     >
                                         Celular:
                                     </label>
                                     <div className="relative">
-
                                         <input
-                                            className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                             type="text"
-                                            name="celular"
                                             id="celular"
+                                            value={celular}
+                                            onChange={handleCelularChange}
+                                            className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                             placeholder="# de Celular"
-                                            defaultValue=""
                                         />
                                     </div>
                                 </div>
-
                                 <div className="mb-5.5">
                                     <label
+                                        htmlFor="correo"
                                         className="mb-3 block text-sm font-medium text-black dark:text-white"
-                                        htmlFor="email"
                                     >
-                                        Email
+                                        Correo
                                     </label>
                                     <div className="relative">
-
                                         <input
-                                            className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                             type="email"
-                                            name="email"
-                                            id="email"
-                                            placeholder="Email"
-                                            defaultValue=""
+                                            id="correo"
+                                            value={correo}
+                                            onChange={handleCorreoChange}
+                                            className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                                            placeholder="Correo"
                                         />
                                     </div>
                                 </div>
-
-
                                 <div className="flex justify-end gap-4.5">
-                                    <button
-                                        className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-                                        type="submit"
+                                    <a href="/funcionarios"
+                                       className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
                                     >
-                                        Cancel
-                                    </button>
+                                        Cancelar
+                                    </a>
                                     <button
+                                        onClick={handleGuardarClick}
                                         className="inline-flex items-center justify-center rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-                                        type="submit"
+                                        type="button"
                                     >
                                         Registrar Funcionario
                                     </button>
@@ -190,8 +257,8 @@ const Funcionario = () => {
                 {/*</div>*/}
 
             </div>
+            <ToastContainer />
         </div>
-
     );
 };
 

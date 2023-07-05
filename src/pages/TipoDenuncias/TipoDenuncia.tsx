@@ -137,12 +137,19 @@ const TipoDenuncia = () => {
                     ))}
                 </select>
             </div>
-            <button
-                onClick={handleGuardarClick}
-                className="inline-flex items-center justify-center rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-            >
-                Registrar Tipo de Denuncia
-            </button>
+            <div className="flex justify-end gap-4.5">
+                <a href="/complaintstype"
+                   className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
+                >
+                    Cancelar
+                </a>
+                <button
+                    onClick={handleGuardarClick}
+                    className="inline-flex items-center justify-center rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+                >
+                    Registrar Tipo de Denuncia
+                </button>
+            </div>
             <ToastContainer/>
         </div>
     );

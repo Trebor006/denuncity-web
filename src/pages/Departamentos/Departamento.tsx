@@ -71,12 +71,19 @@ const Departamento = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500"
                 />
             </div>
-            <button
-                onClick={handleGuardarClick}
-                className="inline-flex items-center justify-center rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-            >
-                Registrar Área
-            </button>
+            <div className="flex justify-end gap-4.5">
+                <a href="/departaments"
+                   className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
+                >
+                    Cancelar
+                </a>
+                <button
+                    onClick={handleGuardarClick}
+                    className="inline-flex items-center justify-center rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+                >
+                    Registrar Área
+                </button>
+            </div>
             <ToastContainer/>
         </div>
     );
