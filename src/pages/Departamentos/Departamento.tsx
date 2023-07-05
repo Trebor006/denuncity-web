@@ -7,11 +7,11 @@ const Departamento = () => {
     const [nombre, setNombre] = useState("");
     const [descripcion, setDescripcion] = useState("");
 
-    const handleNombreChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    const handleNombreChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNombre(event.target.value);
     };
 
-    const handleDescripcionChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    const handleDescripcionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setDescripcion(event.target.value);
     };
 
@@ -28,11 +28,15 @@ const Departamento = () => {
                 departamentoData
             );
 
-            toast.success("TipoDenuncia registrado exitosamente");
+            toast.success("Área de trabajo registrado exitosamente");
             console.log("Respuesta del servidor:", response.data);
+
+            // Restablecer los valores del formulario
+            setNombre("");
+            setDescripcion("");
         } catch (error) {
-            toast.error("Error al guardar el departamento");
-            console.error("Error al guardar el departamento:", error);
+            toast.error("Error al guardar el área de trabajo");
+            console.error("Error al guardar el área de trabajo:", error);
         }
     };
 

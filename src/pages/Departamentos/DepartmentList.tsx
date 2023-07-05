@@ -1,13 +1,14 @@
 import DefaultLayout from '../../layout/DefaultLayout';
-import Departamento from "./Departamento";
+import Departamentos from "./Departamentos";
 import Breadcrumb from "../../components/Breadcrumb";
 
 const DepartmentForm = () => {
 
     return (
         <DefaultLayout>
-            <Breadcrumb pageName="Registrar Funcionario" />
-            <Departamento/>
+            <Breadcrumb pageName="Funcionarios" />
+
+            <Departamentos/>
         </DefaultLayout>
     );
 };

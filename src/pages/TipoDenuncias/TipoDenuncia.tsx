@@ -41,8 +41,8 @@ const TipoDenuncia = () => {
         setDescripcion(event.target.value);
     };
 
-    const handleColorChange = (color: any) => {
-        setColor(color.hex);
+    const handleColorChange = (color: string) => {
+        setColor(color);
     };
 
     const handleDepartamentoChange = (
@@ -68,6 +68,12 @@ const TipoDenuncia = () => {
 
             toast.success("Tipo de denuncia registrado exitosamente");
             console.log("Respuesta del servidor:", response.data);
+
+            // Restablecer los valores del formulario
+            setNombre("");
+            setDescripcion("");
+            setColor("#000000");
+            setSelectedDepartamento("");
         } catch (error) {
             toast.error("Error al guardar el tipo de denuncia");
             console.error("Error al guardar el tipo de denuncia:", error);
@@ -93,7 +99,7 @@ const TipoDenuncia = () => {
                 <label htmlFor="color" className="block text-sm font-medium text-gray-700">
                     Color del Tipo de Denuncia:
                 </label>
-                <HexColorPicker color={color} onChange={setColor}/>
+                <HexColorPicker color={color} onChange={handleColorChange}/>
             </div>
             <div className="mb-4">
                 <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700">
@@ -134,6 +140,5 @@ const TipoDenuncia = () => {
         </div>
     );
 };
-
 
 export default TipoDenuncia;

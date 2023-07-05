@@ -1,13 +1,13 @@
 import DefaultLayout from '../../layout/DefaultLayout';
-import TipoDenuncia from "./TipoDenuncia";
+import TipoDenuncias from "./TipoDenuncias";
 import Breadcrumb from "../../components/Breadcrumb";
 
 const TipoDenunciaForm = () => {
 
     return (
         <DefaultLayout>
-            <Breadcrumb pageName="Registrar Tipo Denuncia" />
-            <TipoDenuncia/>
+            <Breadcrumb pageName="Tipo de Denuncias" />
+            <TipoDenuncias/>
         </DefaultLayout>
     );
 };

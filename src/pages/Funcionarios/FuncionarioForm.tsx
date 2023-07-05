@@ -1,15 +1,15 @@
 import DefaultLayout from '../../layout/DefaultLayout';
-import Departamento from "./Departamento";
+import Funcionario from "./Funcionario";
 import Breadcrumb from "../../components/Breadcrumb";
 
-const DepartmentForm = () => {
+const FuncionarioForm = () => {
 
     return (
         <DefaultLayout>
             <Breadcrumb pageName="Registrar Funcionario" />
-            <Departamento/>
+            <Funcionario/>
         </DefaultLayout>
     );
 };
 
-export default DepartmentForm;
+export default FuncionarioForm;

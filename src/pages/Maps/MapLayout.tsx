@@ -1,5 +1,4 @@
-// {/*todo Uncomment this*/}
-// import Breadcrumb from '../../components/Breadcrumb';
+import Breadcrumb from '../../components/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
 // import DenunciaTable from '../../components/DenunciasTable';
 import Map from "../../components/Map";

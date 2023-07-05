@@ -16,6 +16,10 @@ import MapLayout from "./pages/Maps/MapLayout";
 import {MapProvider} from './pages/api/MapContext';
 import DepartmentForm from "./pages/Departamentos/DepartmentForm";
 import TipoDenunciaForm from "./pages/TipoDenuncias/TipoDenunciaForm";
+import DepartmentList from "./pages/Departamentos/DepartmentList";
+import TipoDenunciaList from "./pages/TipoDenuncias/TipoDenunciaList";
+import FuncionarioForm from "./pages/Funcionarios/FuncionarioForm";
+import FuncionarioList from "./pages/Funcionarios/FuncionarioList";
 
 
 function App() {
@@ -43,10 +47,17 @@ function App() {
                 <Routes>
                     {/*<Route path="/" element={<ECommerce/>}/>*/}
                     <Route path="/" element={<MapLayout/>}/>
+
+                    <Route path="/departaments" element={<DepartmentList/>}/>
+                    <Route path="/departaments/registrar" element={<DepartmentForm/>}/>
+
+                    <Route path="/complaintstype" element={<TipoDenunciaList/>}/>
+                    <Route path="/complaintstype/registrar" element={<TipoDenunciaForm/>}/>
+
+                    <Route path="/funcionarios" element={<FuncionarioList/>}/>
+                    <Route path="/funcionarios/registrar" element={<FuncionarioForm/>}/>
+
                     <Route path="/maps" element={<MapLayout/>}/>
-                    <Route path="/departaments" element={<DepartmentForm/>}/>
-                    <Route path="/complaintstype" element={<TipoDenunciaForm/>}/>
-                    <Route path="/funcionarios" element={<DepartmentForm/>}/>
 
                     <Route path="/calendar" element={<Calendar/>}/>
                     <Route path="/profile" element={<Profile/>}/>
