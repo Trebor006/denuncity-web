@@ -31,7 +31,9 @@ const TipoDenuncia = () => {
         }
     };
 
-    const handleNombreChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleNombreChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
         setNombre(event.target.value);
     };
 
@@ -52,6 +54,11 @@ const TipoDenuncia = () => {
     };
 
     const handleGuardarClick = async () => {
+        if (nombre === "" || descripcion === "" || selectedDepartamento === "") {
+            toast.error("Por favor, complete todos los campos");
+            return;
+        }
+
         try {
             const tipoDenunciaData = {
                 nombre,

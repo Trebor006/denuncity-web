@@ -16,6 +16,11 @@ const Departamento = () => {
     };
 
     const handleGuardarClick = async () => {
+        if (nombre === "" || descripcion === "") {
+            toast.error("Por favor, complete todos los campos");
+            return;
+        }
+
         try {
             const departamentoData = {
                 nombre,
