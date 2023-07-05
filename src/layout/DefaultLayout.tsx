@@ -1,7 +1,6 @@
 import { ReactNode, useState } from 'react';
-// {/*todo Uncomment this*/}
-// import Header from '../components/Header';
-// import Sidebar from '../components/Sidebar';
+import Header from '../components/Header';
+import Sidebar from '../components/Sidebar';
 
 interface DefaultLayoutProps {
   children: ReactNode;
@@ -16,7 +15,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
       <div className="flex h-screen overflow-hidden">
         {/* <!-- ===== Sidebar Start ===== --> */}
         {/*todo Uncomment this*/}
-        {/*<Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />*/}
+        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         {/* <!-- ===== Sidebar End ===== --> */}
 
         {/* <!-- ===== Content Area Start ===== --> */}
