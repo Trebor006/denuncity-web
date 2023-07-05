@@ -6,7 +6,7 @@ const DepartmentForm = () => {
 
     return (
         <DefaultLayout>
-            <Breadcrumb pageName="Funcionarios" />
+            <Breadcrumb pageName="Departamentos" />
 
             <Departamentos/>
         </DefaultLayout>
