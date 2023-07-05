@@ -20,6 +20,7 @@ import DepartmentList from "./pages/Departamentos/DepartmentList";
 import TipoDenunciaList from "./pages/TipoDenuncias/TipoDenunciaList";
 import FuncionarioForm from "./pages/Funcionarios/FuncionarioForm";
 import FuncionarioList from "./pages/Funcionarios/FuncionarioList";
+import DenunciasDetailForm from "./pages/DenunciasDetail/DenunciasDetailForm";
 
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
                     <Route path="/funcionarios/registrar" element={<FuncionarioForm/>}/>
 
                     <Route path="/maps" element={<MapLayout/>}/>
+                    <Route path="/denuncias-detail" element={<DenunciasDetailForm/>}/>
 
                     <Route path="/calendar" element={<Calendar/>}/>
                     <Route path="/profile" element={<Profile/>}/>
