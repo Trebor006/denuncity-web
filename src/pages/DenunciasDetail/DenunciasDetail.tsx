@@ -29,7 +29,7 @@ const DenunciasDetail = () => {
 
     const obtenerDenuncias = async () => {
         try {
-            const response = await axios.get<Denuncia[]>('http://localhost:3001/denuncias/listarall');
+            const response = await axios.get<Denuncia[]>('https://denuncity-backend-app-in7v2.ondigitalocean.app/denuncias/listarall');
             setDenuncias(response.data);
             // Actualizar la paginación con los nuevos datos
             setPaginacion(prevState => ({ ...prevState, total: response.data.length }));
@@ -40,7 +40,7 @@ const DenunciasDetail = () => {
 
     const filtrarDenuncias = async () => {
         try {
-            const response = await axios.get<Denuncia[]>('http://localhost:3001/denuncias/listarall', { params: filtros });
+            const response = await axios.get<Denuncia[]>('https://denuncity-backend-app-in7v2.ondigitalocean.app/denuncias/listarall', { params: filtros });
             setDenuncias(response.data);
             // Actualizar la paginación con los nuevos datos
             setPaginacion(prevState => ({ ...prevState, total: response.data.length, page: 1 }));

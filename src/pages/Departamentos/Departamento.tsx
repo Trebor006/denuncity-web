@@ -29,7 +29,7 @@ const Departamento = () => {
 
             // Enviar los datos al servidor
             const response = await axios.post(
-                "http://localhost:3001/departamentos/registrar",
+                "https://denuncity-backend-app-in7v2.ondigitalocean.app/departamentos/registrar",
                 departamentoData
             );
 

@@ -18,7 +18,7 @@ const TipoDenuncias = () => {
 
     const obtenerTiposDenuncia = async () => {
         try {
-            const response = await fetch('http://localhost:3001/tipo-denuncias');
+            const response = await fetch('https://denuncity-backend-app-in7v2.ondigitalocean.app/tipo-denuncias');
             const data = await response.json();
             setTiposDenuncia(data);
         } catch (error) {

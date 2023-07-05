@@ -17,7 +17,7 @@ const Departamentos = () => {
 
     const obtenerDepartamentos = async () => {
         try {
-            const response = await fetch('http://localhost:3001/departamentos');
+            const response = await fetch('https://denuncity-backend-app-in7v2.ondigitalocean.app/departamentos');
             const data = await response.json();
             setDepartamentos(data);
         } catch (error) {

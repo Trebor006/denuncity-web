@@ -23,7 +23,7 @@ const TipoDenuncia = () => {
     const fetchDepartamentos = async () => {
         try {
             const response = await axios.get<Departamento[]>(
-                "http://localhost:3001/departamentos"
+                "https://denuncity-backend-app-in7v2.ondigitalocean.app/departamentos"
             );
             setDepartamentos(response.data);
         } catch (error) {
@@ -69,7 +69,7 @@ const TipoDenuncia = () => {
 
             // Enviar los datos al servidor
             const response = await axios.post(
-                "http://localhost:3001/tipo-denuncias/registrar",
+                "https://denuncity-backend-app-in7v2.ondigitalocean.app/tipo-denuncias/registrar",
                 tipoDenunciaData
             );
 

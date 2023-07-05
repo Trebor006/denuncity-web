@@ -31,7 +31,7 @@ const Configuration: React.FC = () => {
     event.preventDefault();
     try {
       await axios.post(
-        "http://localhost:3001/configuraciones/registrar",
+        "https://denuncity-backend-app-in7v2.ondigitalocean.app/configuraciones/registrar",
         config
       );
       toast.success("Configuración guardada exitosamente");

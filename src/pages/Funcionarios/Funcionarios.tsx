@@ -19,7 +19,7 @@ const Funcionarios = () => {
 
     const obtenerFuncionarios = async () => {
         try {
-            const response = await axios.get<Funcionario[]>('http://localhost:3001/funcionarios');
+            const response = await axios.get<Funcionario[]>('https://denuncity-backend-app-in7v2.ondigitalocean.app/funcionarios');
             setFuncionarios(response.data);
         } catch (error) {
             console.error('Error al obtener los funcionarios:', error);

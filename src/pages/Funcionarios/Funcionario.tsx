@@ -59,7 +59,7 @@ const Funcionario = () => {
 
             // Enviar los datos al servidor
             const response = await axios.post(
-                "http://localhost:3001/funcionario/registrar",
+                "https://denuncity-backend-app-in7v2.ondigitalocean.app/funcionario/registrar",
                 funcionarioData
             );
 
