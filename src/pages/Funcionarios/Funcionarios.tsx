@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {Link} from "react-router-dom";
 
 interface Funcionario {
     id: number;
@@ -7,7 +8,7 @@ interface Funcionario {
     apellido: string;
     ci: string;
     celular: string;
-    email: string;
+    correo: string;
 }
 
 const Funcionarios = () => {
@@ -66,10 +67,10 @@ const Funcionarios = () => {
                             Celular
                         </th>
                         <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                            Email
+                            Correo
                         </th>
                         <th className="py-4 px-4 font-medium text-black dark:text-white">
-                            Actions
+                            Acciones
                         </th>
                     </tr>
                     </thead>
@@ -91,27 +92,14 @@ const Funcionarios = () => {
                                 <p className="text-black dark:text-white">{funcionario.celular}</p>
                             </td>
                             <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                <p className="text-black dark:text-white">{funcionario.email}</p>
+                                <p className="text-black dark:text-white">{funcionario.correo}</p>
                             </td>
                             <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                 <div className="flex items-center space-x-3.5">
-                                    <button
-                                        onClick={() => verFuncionario(funcionario.id)}
-                                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
-                                    >
-                                        Ver
-                                    </button>
-                                    <button
-                                        onClick={() => editarFuncionario(funcionario.id)}
-                                        className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2"
-                                    >
-                                        Editar
-                                    </button>
-                                    <button
-                                        onClick={() => darDeBajaFuncionario(funcionario.id)}
-                                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                    >
-                                        Baja
+                                    <button>
+                                        <Link to={`/funcionarios/ver/${funcionario.id}`}>
+                                            Ver
+                                        </Link>
                                     </button>
                                 </div>
                             </td>

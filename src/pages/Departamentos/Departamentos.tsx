@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
+import {Link} from "react-router-dom";
 
 
 // Interfaz para el departamento
@@ -33,12 +34,13 @@ const Departamentos = () => {
         // Lógica para editar el departamento con el ID especificado
     };
 
-    const darDeBajaDepartamento = (id: number) => {
-        // Lógica para dar de baja el departamento con el ID especificado
-    };
+    // const darDeBajaDepartamento = (id: number) => {
+    //     // Lógica para dar de baja el departamento con el ID especificado
+    // };
 
     return (
-        <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+        <div
+            className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
             <div className="flex justify-end mb-4">
                 <a href="/departaments/registrar"
                    className="inline-flex items-center justify-center rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
@@ -58,7 +60,7 @@ const Departamentos = () => {
                             Descripción
                         </th>
                         <th className="py-4 px-4 font-medium text-black dark:text-white">
-                            Actions
+                            Acciones
                         </th>
                     </tr>
                     </thead>
@@ -66,38 +68,30 @@ const Departamentos = () => {
 
                     {departamentos.map((departamento) => (
                         <tr key={departamento.id}>
-                        <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                            <h5 className="font-medium text-black dark:text-white">
-                                {departamento.nombre}
-                            </h5>
-                        </td>
-                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                            <p className="text-black dark:text-white">{departamento.descripcion}</p>
-                        </td>
-                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                            <div className="flex items-center space-x-3.5">
-                                <button
-                                    onClick={() => verDepartamento(departamento.id)}
-                                    // className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
-                                >
-                                    Ver
-                                </button>
-                                <button
-                                    onClick={() => editarDepartamento(departamento.id)}
-                                    // className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2"
-                                >
-                                    Editar
-                                </button>
-                                <button
-                                    onClick={() => darDeBajaDepartamento(departamento.id)}
-                                    // className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                >
-                                    Baja
-                                </button>
-                            </div>
+                            <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+                                <h5 className="font-medium text-black dark:text-white">
+                                    {departamento.nombre}
+                                </h5>
+                            </td>
+                            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                                <p className="text-black dark:text-white">{departamento.descripcion}</p>
+                            </td>
+                            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                                <div className="flex items-center space-x-3.5">
+                                    <button onClick={() => verDepartamento(departamento.id)}>
+                                        <Link to={`/departaments/ver/${departamento.id}`}>
+                                            Ver
+                                        </Link>
+                                    </button>
+                                    {/*<button onClick={() => editarDepartamento(departamento.id)}>*/}
+                                    {/*    <Link to={`/departaments/editar/${departamento.id}`}>*/}
+                                    {/*        Editar*/}
+                                    {/*    </Link>*/}
+                                    {/*</button>*/}
+                                </div>
 
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
                     ))}
                     </tbody>
                 </table>

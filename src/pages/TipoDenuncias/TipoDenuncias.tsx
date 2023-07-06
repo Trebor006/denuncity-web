@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import {Link} from "react-router-dom";
 
 // Interfaz para el tipo de denuncia
 interface TipoDenuncia {
@@ -86,9 +87,11 @@ const TipoDenuncias = () => {
                             </td>
                             <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                 <div className="flex items-center space-x-3.5">
-                                    <button onClick={() => verTipoDenuncia(tipoDenuncia.id)}>Ver</button>
-                                    <button onClick={() => editarTipoDenuncia(tipoDenuncia.id)}>Editar</button>
-                                    <button onClick={() => darDeBajaTipoDenuncia(tipoDenuncia.id)}>Baja</button>
+                                    <button>
+                                        <Link to={`/complaintstype/ver/${tipoDenuncia.id}`}>
+                                            Ver
+                                        </Link>
+                                    </button>
                                 </div>
                             </td>
                         </tr>

@@ -14,3 +14,9 @@ const DepartmentForm = () => {
 };
 
 export default DepartmentForm;
+
+// Alumbrado
+// Basura acumulada
+// Baches
+// Fugas de agua
+// Plazas descuidadas

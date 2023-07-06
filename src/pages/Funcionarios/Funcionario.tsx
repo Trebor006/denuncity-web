@@ -1,14 +1,75 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {useLocation, useParams} from "react-router-dom";
+
+interface Departamento {
+    id: number;
+    nombre: string;
+}
+
+interface Funcionario {
+    id: number;
+    nombre: string;
+    apellido: string;
+    ci: string;
+    celular: string;
+    correo: string;
+    departamento: string;
+}
 
 const Funcionario = () => {
+    const {id} = useParams<{ id: string }>();
+    const location = useLocation();
+    const [isEditing, setIsEditing] = useState(true);
+
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
     const [ci, setCI] = useState("");
     const [celular, setCelular] = useState("");
     const [correo, setCorreo] = useState("");
+
+    const [departamentos, setDepartamentos] = useState<Departamento[]>([]);
+    const [departamento, setDepartamento] = useState("");
+
+    useEffect(() => {
+        const cargarFuncionario = async () => {
+            if (id) {
+                try {
+                    const response = await axios.get(`https://denuncity-backend-app-in7v2.ondigitalocean.app/funcionarios/buscar?id=${id}`);
+                    const funcionario: Funcionario = response.data;
+                    setNombre(funcionario.nombre);
+                    setApellido(funcionario.apellido);
+                    setCI(funcionario.ci);
+                    setCelular(funcionario.celular);
+                    setCorreo(funcionario.correo);
+                    setDepartamento(funcionario.departamento);
+                } catch (error) {
+                    console.error('Error al cargar el departamento:', error);
+                }
+            }
+        };
+
+        setIsEditing(location.pathname.includes('editar') || location.pathname.includes('registrar'));
+
+        cargarFuncionario();
+    }, [id, location.pathname]);
+
+    useEffect(() => {
+        fetchDepartamentos();
+    }, []);
+
+    const fetchDepartamentos = async () => {
+        try {
+            const response = await axios.get<Departamento[]>(
+                "https://denuncity-backend-app-in7v2.ondigitalocean.app/departamentos"
+            );
+            setDepartamentos(response.data);
+        } catch (error) {
+            console.error("Error al obtener los departamentos:", error);
+        }
+    };
 
     const handleNombreChange = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -36,13 +97,18 @@ const Funcionario = () => {
         setCorreo(event.target.value);
     };
 
+    const handleDepartamentoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setDepartamento(event.target.value);
+    };
+
     const handleGuardarClick = async () => {
         if (
             nombre === "" ||
             apellido === "" ||
             ci === "" ||
             celular === "" ||
-            correo === ""
+            correo === "" ||
+            departamento === ""
         ) {
             toast.error("Por favor, complete todos los campos");
             return;
@@ -55,11 +121,12 @@ const Funcionario = () => {
                 ci,
                 celular,
                 correo,
+                departamento,
             };
 
             // Enviar los datos al servidor
             const response = await axios.post(
-                "https://denuncity-backend-app-in7v2.ondigitalocean.app/funcionario/registrar",
+                "https://denuncity-backend-app-in7v2.ondigitalocean.app/funcionarios/registrar",
                 funcionarioData
             );
 
@@ -72,6 +139,7 @@ const Funcionario = () => {
             setCI("");
             setCelular("");
             setCorreo("");
+            setDepartamento("");
         } catch (error) {
             toast.error("Error al guardar el funcionario");
             console.error("Error al guardar el funcionario:", error);
@@ -82,7 +150,8 @@ const Funcionario = () => {
         <div className="mx-auto max-w-270">
             <div className="grid grid-cols-5 gap-8">
                 <div className="col-span-5 xl:col-span-3">
-                    <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div
+                        className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                         <div className="p-7">
                             <form>
                                 <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
@@ -96,6 +165,7 @@ const Funcionario = () => {
                                         <input
                                             type="text"
                                             id="name"
+                                            disabled={!isEditing}
                                             value={nombre}
                                             onChange={handleNombreChange}
                                             className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
@@ -112,6 +182,7 @@ const Funcionario = () => {
                                         <input
                                             type="text"
                                             id="lastname"
+                                            disabled={!isEditing}
                                             value={apellido}
                                             onChange={handleApellidoChange}
                                             className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
@@ -131,6 +202,7 @@ const Funcionario = () => {
                                             type="text"
                                             id="ci"
                                             value={ci}
+                                            disabled={!isEditing}
                                             onChange={handleCIChange}
                                             className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                             placeholder="# de Carnet"
@@ -148,6 +220,7 @@ const Funcionario = () => {
                                         <input
                                             type="text"
                                             id="celular"
+                                            disabled={!isEditing}
                                             value={celular}
                                             onChange={handleCelularChange}
                                             className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
@@ -166,11 +239,35 @@ const Funcionario = () => {
                                         <input
                                             type="email"
                                             id="correo"
+                                            disabled={!isEditing}
                                             value={correo}
                                             onChange={handleCorreoChange}
                                             className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                             placeholder="Correo"
                                         />
+                                    </div>
+                                </div>
+
+                                <div className="mb-5.5">
+                                    <label htmlFor="correo"
+                                        className="mb-3 block text-sm font-medium text-black dark:text-white" >
+                                        Departamento:
+                                    </label>
+                                    <div className="relative">
+                                        <select
+                                            id="departamento"
+                                            value={departamento}
+                                            disabled={!isEditing}
+                                            onChange={handleDepartamentoChange}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500"
+                                        >
+                                            <option value="">Seleccione un departamento</option>
+                                            {departamentos.map((departamento) => (
+                                                <option key={departamento.id} value={departamento.id}>
+                                                    {departamento.nombre}
+                                                </option>
+                                            ))}
+                                        </select>
                                     </div>
                                 </div>
                                 <div className="flex justify-end gap-4.5">
@@ -179,13 +276,15 @@ const Funcionario = () => {
                                     >
                                         Cancelar
                                     </a>
-                                    <button
-                                        onClick={handleGuardarClick}
-                                        className="inline-flex items-center justify-center rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-                                        type="button"
-                                    >
-                                        Registrar Funcionario
-                                    </button>
+                                    {isEditing &&
+                                        <button
+                                            onClick={handleGuardarClick}
+                                            className="inline-flex items-center justify-center rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+                                            type="button"
+                                        >
+                                            Guardar
+                                        </button>
+                                    }
                                 </div>
                             </form>
                         </div>
@@ -257,7 +356,7 @@ const Funcionario = () => {
                 {/*</div>*/}
 
             </div>
-            <ToastContainer />
+            <ToastContainer/>
         </div>
     );
 };
