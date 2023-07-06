@@ -51,9 +51,13 @@ function App() {
 
                     <Route path="/departaments" element={<DepartmentList/>}/>
                     <Route path="/departaments/registrar" element={<DepartmentForm/>}/>
+                    <Route path="/departaments/ver/:id" element={<DepartmentForm/>}/>
+                    <Route path="/departaments/editar/:id" element={<DepartmentForm/>}/>
 
                     <Route path="/complaintstype" element={<TipoDenunciaList/>}/>
                     <Route path="/complaintstype/registrar" element={<TipoDenunciaForm/>}/>
+                    <Route path="/complaintstype/ver/:id" element={<TipoDenunciaForm/>}/>
+                    <Route path="/complaintstype/editar/:id" element={<TipoDenunciaForm/>}/>
 
                     <Route path="/funcionarios" element={<FuncionarioList/>}/>
                     <Route path="/funcionarios/registrar" element={<FuncionarioForm/>}/>
