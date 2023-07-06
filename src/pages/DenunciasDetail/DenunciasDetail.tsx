@@ -16,7 +16,7 @@ interface DenunciaResult {
 }
 
 interface Denuncia {
-    hash: string;
+    _id: string;
     correo: string;
     titulo: string;
     createdAt: string;
@@ -46,11 +46,11 @@ const DenunciasDetail = () => {
         estado: '',
         tipoDenuncia: ''
     });
-    const [paginacion, setPaginacion] = useState({
-        page: 1,
-        pageSize: 10,
-        total: 0
-    });
+
+    const [page, setPage] = useState<number>(1);
+    const [pageSize, sePageSize] = useState<number>(10);
+    const [total, setTotal] = useState<number>(0);
+    const [renderPagination, setRenderPagination] = useState<boolean>(false);
 
     useEffect(() => {
         obtenerTiposDenuncia();
@@ -73,12 +73,15 @@ const DenunciasDetail = () => {
     useEffect(() => {
         console.log(" se disparo el cambio de estado en los filtros!!");
         filtrarDenuncias();
-    }, [filtros, paginacion]);
+    }, [filtros, page]);
 
     const filtrarDenuncias = async () => {
         try {
+            console.log("paginacion");
+            console.log(page);
+
             const response = await axios.get<DenunciaResult>('http://localhost:3001/denuncias/busquedaPaginada', {
-                params: {...filtros,  pagina: paginacion.page, porPagina: paginacion.pageSize}
+                params: {...filtros,  pagina: page, porPagina: pageSize}
             });
             const denunciasResult = response.data;
 
@@ -86,15 +89,19 @@ const DenunciasDetail = () => {
 
             setDenuncias(denunciasResult.denuncias);
             // Actualizar la paginación con los nuevos datos
-            setPaginacion(prevState => ({...prevState, total: denunciasResult.totalPaginas, page: 1}));
+            setTotal(denunciasResult.totalPaginas);
+
+            // setPaginacion(prevState => ({...prevState, total: denunciasResult.totalPaginas, page: 1}));
         } catch (error) {
             console.error('Error al filtrar las denuncias:', error);
         }
+
+        setRenderPagination(true);
     };
 
-    const cambiarPagina = (page: number) => {
-        // Actualizar la página actual en la paginación
-        setPaginacion(prevState => ({...prevState, page}));
+    const cambiarPagina = (pageNumber: number) => {
+        console.log("new Page number:" + pageNumber);
+        setPage(pageNumber);
     };
 
     const verDenuncia = (titulo: string) => {
@@ -119,6 +126,26 @@ const DenunciasDetail = () => {
         const nuevoEstado = event.target.value;
         setFiltros(prevState => ({...prevState, estado: event.target.value}))
         console.log("Actualizado estado!!!" + nuevoEstado);
+    };
+
+    const renderizarBotonesPaginas = () => {
+        const botones = [];
+        for (let i = 1; i <= total; i++) {
+            botones.push(
+                <button
+                    key={i}
+                    onClick={() => cambiarPagina(i)}
+                    className={`bg-primary text-white rounded px-4 py-2 font-medium ${
+                        page === i ? 'bg-opacity-80' : ''
+                    }`}
+                >
+                    {i}
+                </button>
+            );
+        }
+
+        setRenderPagination(false);
+        return botones;
     };
 
     return (
@@ -165,19 +192,21 @@ const DenunciasDetail = () => {
                     </button>
                 </div>
                 <div className="flex space-x-2">
+
                     <button
-                        onClick={() => cambiarPagina(paginacion.page - 1)}
-                        disabled={paginacion.page === 1}
+                        onClick={() => cambiarPagina(page - 1)}
+                        disabled={page === 1}
                         className="bg-primary text-white rounded px-4 py-2 font-medium"
                     >
-                        Anterior
+                        &lt;
                     </button>
+                     { renderPagination && renderizarBotonesPaginas()}
                     <button
-                        onClick={() => cambiarPagina(paginacion.page + 1)}
-                        disabled={paginacion.page * paginacion.pageSize >= paginacion.total}
+                        onClick={() => cambiarPagina(page + 1)}
+                        disabled={page >= total}
                         className="bg-primary text-white rounded px-4 py-2 font-medium"
                     >
-                        Siguiente
+                        &gt;
                     </button>
                 </div>
             </div>
@@ -209,12 +238,8 @@ const DenunciasDetail = () => {
                     <tbody>
                     {denuncias &&
                         denuncias
-                            .slice(
-                                (paginacion.page - 1) * paginacion.pageSize,
-                                paginacion.page * paginacion.pageSize
-                            )
                             .map((denuncia) => (
-                                <tr key={denuncia.hash}>
+                                <tr key={denuncia._id}>
                                     <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                                         <h5 className="font-medium text-black dark:text-white">
                                             {denuncia.createdAt}
@@ -241,7 +266,7 @@ const DenunciasDetail = () => {
                                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                         <div className="flex items-center space-x-3.5">
                                             <button>
-                                                <Link to={`/denuncias-detail/ver/${denuncia.hash}`}>
+                                                <Link to={`/denuncias-detail/ver/${denuncia._id}`}>
                                                     Ver
                                                 </Link>
                                             </button>
