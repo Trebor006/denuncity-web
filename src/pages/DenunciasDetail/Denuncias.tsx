@@ -37,7 +37,7 @@ const dataEstados: estados[] = [
     {id: 'PROCESADA', nombre: 'PROCESADA'},
 ];
 
-const DenunciasDetail = () => {
+const Denuncias = () => {
     const [tiposDenuncia, setTiposDenuncia] = useState<TipoDenuncia[]>([]);
     const [denuncias, setDenuncias] = useState<Denuncia[]>([]);
     const [filtros, setFiltros] = useState({
@@ -73,7 +73,8 @@ const DenunciasDetail = () => {
     useEffect(() => {
         console.log(" se disparo el cambio de estado en los filtros!!");
         filtrarDenuncias();
-    }, [filtros, page]);
+        setPage(1);
+    }, [filtros]);
 
     const filtrarDenuncias = async () => {
         try {
@@ -102,6 +103,7 @@ const DenunciasDetail = () => {
     const cambiarPagina = (pageNumber: number) => {
         console.log("new Page number:" + pageNumber);
         setPage(pageNumber);
+        filtrarDenuncias();
     };
 
     const verDenuncia = (titulo: string) => {
@@ -293,4 +295,4 @@ const DenunciasDetail = () => {
     );
 };
 
-export default DenunciasDetail;
+export default Denuncias;

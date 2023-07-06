@@ -1,15 +1,15 @@
 import DefaultLayout from '../../layout/DefaultLayout';
-import DenunciasDetail from "./DenunciasDetail";
+import Denuncias from "./Denuncias";
 import Breadcrumb from "../../components/Breadcrumb";
 
-const DenunciasDetailForm = () => {
+const DenunciasDetails = () => {
 
     return (
         <DefaultLayout>
             <Breadcrumb pageName="Detalle de Denuncias" />
-            <DenunciasDetail/>
+            <Denuncias/>
         </DefaultLayout>
     );
 };
 
-export default DenunciasDetailForm;
+export default DenunciasDetails;

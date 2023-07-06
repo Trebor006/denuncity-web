@@ -18,8 +18,9 @@ import DepartmentList from "./pages/Departamentos/DepartmentList";
 import TipoDenunciaList from "./pages/TipoDenuncias/TipoDenunciaList";
 import FuncionarioForm from "./pages/Funcionarios/FuncionarioForm";
 import FuncionarioList from "./pages/Funcionarios/FuncionarioList";
-import DenunciasDetailForm from "./pages/DenunciasDetail/DenunciasDetailForm";
+import DenunciasDetails from "./pages/DenunciasDetail/DenunciasDetails";
 import {GeneralContext, GeneralProvider} from "./pages/api/GeneralContext";
+import DenunciaForm from "./pages/DenunciasDetail/DenunciaForm";
 
 
 function App() {
@@ -52,7 +53,7 @@ function App() {
 
                 {/*        <Route path="/maps" element={<MapLayout/>}/>*/}
 
-                {/*        <Route path="/denuncias-detail" element={<DenunciasDetailForm/>}/>*/}
+                {/*        <Route path="/denuncias-detail" element={<DenunciasDetails/>}/>*/}
 
                 {/*        <Route path="/calendar" element={<Calendar/>}/>*/}
                 {/*        <Route path="/profile" element={<Profile/>}/>*/}
@@ -86,7 +87,9 @@ function App() {
 
 
                         <Route path="/maps" element={<MapLayout/>}/>
-                        <Route path="/denuncias-detail" element={<DenunciasDetailForm/>}/>
+                        <Route path="/denuncias-detail" element={<DenunciasDetails/>}/>
+                        <Route path="/denuncias-detail/ver/:id" element={<DenunciaForm/>}/>
+                        <Route path="/denuncias-detail/editar/:id" element={<DenunciaForm/>}/>
 
                         <Route path="/calendar" element={<Calendar/>}/>
                         <Route path="/profile" element={<Profile/>}/>
