@@ -1,14 +1,39 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+interface Departamento {
+    id: number;
+    nombre: string;
+}
+
 const Funcionario = () => {
+    const [isEditing, setIsEditing] = useState(true);
+
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
     const [ci, setCI] = useState("");
     const [celular, setCelular] = useState("");
     const [correo, setCorreo] = useState("");
+
+    const [departamentos, setDepartamentos] = useState<Departamento[]>([]);
+    const [departamento, setDepartamento] = useState("");
+
+    useEffect(() => {
+        fetchDepartamentos();
+    }, []);
+
+    const fetchDepartamentos = async () => {
+        try {
+            const response = await axios.get<Departamento[]>(
+                "http://localhost:3001/departamentos"
+            );
+            setDepartamentos(response.data);
+        } catch (error) {
+            console.error("Error al obtener los departamentos:", error);
+        }
+    };
 
     const handleNombreChange = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -36,13 +61,18 @@ const Funcionario = () => {
         setCorreo(event.target.value);
     };
 
+    const handleDepartamentoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setDepartamento(event.target.value);
+    };
+
     const handleGuardarClick = async () => {
         if (
             nombre === "" ||
             apellido === "" ||
             ci === "" ||
             celular === "" ||
-            correo === ""
+            correo === "" ||
+            departamento === ""
         ) {
             toast.error("Por favor, complete todos los campos");
             return;
@@ -55,11 +85,12 @@ const Funcionario = () => {
                 ci,
                 celular,
                 correo,
+                departamento,
             };
 
             // Enviar los datos al servidor
             const response = await axios.post(
-                "http://localhost:3001/funcionario/registrar",
+                "http://localhost:3001/funcionarios/registrar",
                 funcionarioData
             );
 
@@ -72,6 +103,7 @@ const Funcionario = () => {
             setCI("");
             setCelular("");
             setCorreo("");
+            setDepartamento("");
         } catch (error) {
             toast.error("Error al guardar el funcionario");
             console.error("Error al guardar el funcionario:", error);
@@ -171,6 +203,31 @@ const Funcionario = () => {
                                             className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                             placeholder="Correo"
                                         />
+                                    </div>
+                                </div>
+
+                                <div className="mb-5.5">
+                                    <label
+                                        htmlFor="correo"
+                                        className="mb-3 block text-sm font-medium text-black dark:text-white"
+                                    >
+                                        Departamento:
+                                    </label>
+                                    <div className="relative">
+                                        <select
+                                            id="departamento"
+                                            value={departamento}
+                                            disabled={!isEditing}
+                                            onChange={handleDepartamentoChange}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500"
+                                        >
+                                            <option value="">Seleccione un departamento</option>
+                                            {departamentos.map((departamento) => (
+                                                <option key={departamento.id} value={departamento.id}>
+                                                    {departamento.nombre}
+                                                </option>
+                                            ))}
+                                        </select>
                                     </div>
                                 </div>
                                 <div className="flex justify-end gap-4.5">

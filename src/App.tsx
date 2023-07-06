@@ -61,6 +61,9 @@ function App() {
 
                     <Route path="/funcionarios" element={<FuncionarioList/>}/>
                     <Route path="/funcionarios/registrar" element={<FuncionarioForm/>}/>
+                    <Route path="/funcionarios/ver/:id" element={<FuncionarioForm/>}/>
+                    <Route path="/funcionarios/editar/:id" element={<FuncionarioForm/>}/>
+
 
                     <Route path="/maps" element={<MapLayout/>}/>
                     <Route path="/denuncias-detail" element={<DenunciasDetailForm/>}/>
