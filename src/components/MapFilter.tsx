@@ -1,20 +1,14 @@
-import React, {useContext} from "react";
-import {MapContext} from "../pages/api/MapContext";
+import React, {useContext, useEffect, useState} from "react";
+import {GeneralContext} from "../pages/api/GeneralContext";
 
 
 interface TipoDenuncia {
-    id: string;
+    id: number;
     nombre: string;
+    descripcion: string;
+    color: string;
+    departamento: string;
 }
-
-const dataTipoDenuncia: TipoDenuncia[] = [
-    {id: '', nombre: '-- Selecionar Tipo de Denuncia --'},
-    {id: 'Alumbrado', nombre: 'Alumbrado'},
-    {id: 'Basura acumulada', nombre: 'Basura acumulada'},
-    {id: 'Baches', nombre: 'Baches'},
-    {id: 'Fugas de agua', nombre: 'Fugas de agua'},
-    {id: 'Plazas descuidadas', nombre: 'Plazas descuidadas'},
-];
 
 interface estados {
     id: string;
@@ -28,8 +22,22 @@ const dataEstados: estados[] = [
 ];
 const MapFilter: React.FC = () => {
 
-    const {setFiltroEstado, setFechaInicio, setFechaFin, setTipoDenuncia} = useContext(MapContext);
+    const {setFiltroEstado, setFechaInicio, setFechaFin, setTipoDenuncia} = useContext(GeneralContext);
+    const [tiposDenuncia, setTiposDenuncia] = useState<TipoDenuncia[]>([]);
 
+    useEffect(() => {
+        obtenerTiposDenuncia();
+    }, []);
+
+    const obtenerTiposDenuncia = async () => {
+        try {
+            const response = await fetch('http://localhost:3001/tipo-denuncias');
+            const data = await response.json();
+            setTiposDenuncia(data);
+        } catch (error) {
+            console.error('Error al obtener los tipos de denuncia:', error);
+        }
+    };
     const handleFiltroEstadoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const nuevoEstado = event.target.value;
         setFiltroEstado(nuevoEstado);
@@ -103,8 +111,9 @@ const MapFilter: React.FC = () => {
                             <div className="relative z-20 bg-transparent dark:bg-form-input">
                                 <select id="tipo_denuncia" onChange={handleTipoDenunciaChange}
                                         className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
-                                    {dataTipoDenuncia.map((option) => (
-                                        <option key={option.id} value={option.id}>
+                                    <option value="">Seleccione un Tipo de Denuncia</option>
+                                    {tiposDenuncia.map((option) => (
+                                        <option key={option.nombre} value={option.nombre}>
                                             {option.nombre}
                                         </option>
                                     ))}

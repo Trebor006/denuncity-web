@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Loader} from '@googlemaps/js-api-loader';
 import {listarAllDenuncias} from "../pages/api/denuncias";
-import {MapContext} from "../pages/api/MapContext";
+import {GeneralContext} from "../pages/api/GeneralContext";
 
 
 interface DenunciaAllDTO {
@@ -24,7 +24,7 @@ const Map = () => {
     const [denuncias, setDenuncias] = useState<DenunciaAllDTO[]>([]);
     const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(null);
 
-    const { filtroEstado, fechaInicio, fechaFin, tipoDenuncia } = useContext(MapContext);
+    const { filtroEstado, fechaInicio, fechaFin, tipoDenuncia } = useContext(GeneralContext);
 
     useEffect(() => {
         console.log(filtroEstado, fechaInicio, fechaFin, tipoDenuncia);

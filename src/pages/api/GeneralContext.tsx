@@ -1,6 +1,6 @@
-import React, {createContext, ReactNode, useState} from 'react';
+import React, { createContext, ReactNode, useState } from 'react';
 
-interface MapContextProps {
+interface GeneralContextProps {
     filtroEstado: string;
     fechaInicio: string;
     fechaFin: string;
@@ -9,9 +9,16 @@ interface MapContextProps {
     setFechaInicio: (fecha: string) => void;
     setFechaFin: (fecha: string) => void;
     setTipoDenuncia: (tipo: string) => void;
+
+    correo: string;
+    departamento: string;
+    isLoggedIn: boolean;
+    setCorreo: (correo: string) => void;
+    setDepartamento: (departamento: string) => void;
+    setIsLoggedIn: (isLoggedIn: boolean) => void;
 }
 
-export const MapContext = createContext<MapContextProps>({
+export const GeneralContext = createContext<GeneralContextProps>({
     filtroEstado: '',
     fechaInicio: '',
     fechaFin: '',
@@ -24,20 +31,33 @@ export const MapContext = createContext<MapContextProps>({
     },
     setTipoDenuncia: () => {
     },
+
+
+    correo: '',
+    departamento: '',
+    isLoggedIn: false,
+    setCorreo: () => {},
+    setDepartamento: () => {},
+    setIsLoggedIn: () => {},
 });
 
-interface MapProviderProps {
+interface GeneralProviderProps {
     children: ReactNode;
 }
 
-export const MapProvider = ({children}: MapProviderProps) => {
+export const GeneralProvider = ({ children }: GeneralProviderProps) => {
     const [filtroEstado, setFiltroEstado] = useState('');
     const [fechaInicio, setFechaInicio] = useState('');
     const [fechaFin, setFechaFin] = useState('');
     const [tipoDenuncia, setTipoDenuncia] = useState('');
 
+
+    const [correo, setCorreo] = useState('');
+    const [departamento, setDepartamento] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     return (
-        <MapContext.Provider
+        <GeneralContext.Provider
             value={{
                 filtroEstado,
                 fechaInicio,
@@ -47,9 +67,16 @@ export const MapProvider = ({children}: MapProviderProps) => {
                 setFechaInicio,
                 setFechaFin,
                 setTipoDenuncia,
+
+                correo,
+                departamento,
+                isLoggedIn,
+                setCorreo,
+                setDepartamento,
+                setIsLoggedIn,
             }}
         >
             {children}
-        </MapContext.Provider>
+        </GeneralContext.Provider>
     );
 };
