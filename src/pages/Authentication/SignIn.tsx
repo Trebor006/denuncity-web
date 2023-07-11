@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { GeneralContext } from '../api/GeneralContext';
+import Logo from "../../images/logo/logocolor.png";
 
 const SignIn = () => {
     const { isLoggedIn, setIsLoggedIn } = useContext(GeneralContext);
@@ -41,11 +42,14 @@ const SignIn = () => {
     };
 
     return (
-        <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
-                <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
+        <div className="flex justify-center items-center h-screen">
+            <div className="w-2/3 bg-gray-100 rounded p-8 flex">
+                <div className="w-1/2 pr-8">
+                    <img src={Logo} alt="Logo" className="max-w-full max-h-full"/>
+                </div>
+                <div className="w-1/2 pl-8">
                     <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                        Iniciar Sesión
+                        Acceso Funcionarios
                     </h2>
 
                     <form onSubmit={handleSubmit}>
