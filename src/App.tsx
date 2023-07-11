@@ -47,26 +47,26 @@ function App() {
     ) : (
         <>
             <GeneralProvider>
-                {/*{!isLoggedIn ?*/}
-                {/*    <Routes>*/}
-                {/*        <Route path="/" element={<SignIn/>}/>*/}
+                {!isLoggedIn ?
+                    <Routes>
+                        <Route path="/" element={<MapLayout/>}/>
 
-                {/*        <Route path="/maps" element={<MapLayout/>}/>*/}
+                        <Route path="/login" element={<SignIn/>}/>
 
-                {/*        <Route path="/denuncias-detail" element={<DenunciasDetails/>}/>*/}
+                        <Route path="/denuncias-detail" element={<DenunciasDetails/>}/>
 
-                {/*        <Route path="/calendar" element={<Calendar/>}/>*/}
-                {/*        <Route path="/profile" element={<Profile/>}/>*/}
-                {/*        <Route path="/forms/form-elements" element={<FormElements/>}/>*/}
-                {/*        <Route path="/forms/form-layout" element={<FormLayout/>}/>*/}
-                {/*        <Route path="/tables" element={<Tables/>}/>*/}
-                {/*        <Route path="/settings" element={<Settings/>}/>*/}
-                {/*        <Route path="/chart" element={<Chart/>}/>*/}
-                {/*        <Route path="/ui/alerts" element={<Alerts/>}/>*/}
-                {/*        <Route path="/ui/buttons" element={<Buttons/>}/>*/}
-                {/*        <Route path="/auth/signup" element={<SignUp/>}/>*/}
-                {/*    </Routes>*/}
-                {/*    :*/}
+                        <Route path="/calendar" element={<Calendar/>}/>
+                        <Route path="/profile" element={<Profile/>}/>
+                        <Route path="/forms/form-elements" element={<FormElements/>}/>
+                        <Route path="/forms/form-layout" element={<FormLayout/>}/>
+                        <Route path="/tables" element={<Tables/>}/>
+                        <Route path="/settings" element={<Settings/>}/>
+                        <Route path="/chart" element={<Chart/>}/>
+                        <Route path="/ui/alerts" element={<Alerts/>}/>
+                        <Route path="/ui/buttons" element={<Buttons/>}/>
+                        <Route path="/auth/signup" element={<SignUp/>}/>
+                    </Routes>
+                    :
                     <Routes>
                         <Route path="/" element={<MapLayout/>}/>
 
@@ -102,7 +102,7 @@ function App() {
                         <Route path="/ui/buttons" element={<Buttons/>}/>
                         <Route path="/auth/signup" element={<SignUp/>}/>
                     </Routes>
-                {/*}*/}
+                }
             </GeneralProvider>
         </>
     );
