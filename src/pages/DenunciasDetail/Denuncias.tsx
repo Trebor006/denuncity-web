@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {Link} from "react-router-dom";
+import DenunciaModal from "../../components/DenunciaModal";
+import {Denuncia} from "../../structure/denuncia";
 
 interface TipoDenuncia {
     id: number;
@@ -13,16 +15,6 @@ interface TipoDenuncia {
 interface DenunciaResult {
     denuncias: Denuncia[];
     totalPaginas: number;
-}
-
-interface Denuncia {
-    _id: string;
-    correo: string;
-    titulo: string;
-    createdAt: string;
-    descripcion: string;
-    tipoDenuncia: string;
-    estado: string;
 }
 
 interface estados {
@@ -47,14 +39,24 @@ const Denuncias = () => {
         tipoDenuncia: ''
     });
 
+    const [sortConfig, setSortConfig] = useState({key: 'createdAt', direction: 'desc'});
     const [page, setPage] = useState<number>(1);
     const [pageSize, sePageSize] = useState<number>(10);
     const [total, setTotal] = useState<number>(0);
     const [renderPagination, setRenderPagination] = useState<boolean>(false);
+    const [selectedDenuncia, setSelectedDenuncia] = useState<Denuncia | undefined>();
 
     useEffect(() => {
         obtenerTiposDenuncia();
     }, []);
+
+    const handleSort = (key: string) => {
+        let direction = 'asc';
+        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
+            direction = 'desc';
+        }
+        setSortConfig({key, direction});
+    };
 
     const obtenerTiposDenuncia = async () => {
         try {
@@ -74,7 +76,18 @@ const Denuncias = () => {
         console.log(" se disparo el cambio de estado en los filtros!!");
         filtrarDenuncias();
         setPage(1);
-    }, [filtros]);
+    }, [filtros, sortConfig]);
+
+    const [showModal, setShowModal] = useState(false);
+    const openModal = (denuncia: Denuncia) => {
+        setSelectedDenuncia(denuncia);
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+    };
+
 
     const filtrarDenuncias = async () => {
         try {
@@ -82,7 +95,10 @@ const Denuncias = () => {
             console.log(page);
 
             const response = await axios.get<DenunciaResult>('https://denuncity-backend-app-in7v2.ondigitalocean.app/denuncias/busquedaPaginada', {
-                params: {...filtros,  pagina: page, porPagina: pageSize}
+                params: {
+                    ...filtros, pagina: page, porPagina: pageSize,
+                    ordenadoPor: sortConfig.key, ordenadoDir: sortConfig.direction === 'asc' ? 1 : -1
+                }
             });
             const denunciasResult = response.data;
 
@@ -150,6 +166,7 @@ const Denuncias = () => {
         return botones;
     };
 
+    // @ts-ignore
     return (
         <div
             className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -202,7 +219,7 @@ const Denuncias = () => {
                     >
                         &lt;
                     </button>
-                     { renderPagination && renderizarBotonesPaginas()}
+                    {renderPagination && renderizarBotonesPaginas()}
                     <button
                         onClick={() => cambiarPagina(page + 1)}
                         disabled={page >= total}
@@ -217,20 +234,40 @@ const Denuncias = () => {
                 <table className="w-full table-auto">
                     <thead>
                     <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                        <th className="min-w-[120px] py-1 px-4 font-medium text-black dark:text-white xl:pl-11">
-                            Fecha
+                        <th onClick={() => handleSort('createdAt')}
+                            className="min-w-[120px] py-1 px-4 font-medium text-black dark:text-white xl:pl-11">
+                            {sortConfig && sortConfig.key === 'createdAt' && (
+                                <span>{sortConfig.direction === 'asc' ? '🔼' : '🔽'}</span>
+                            )}
+                            {' '} Fecha
                         </th>
-                        <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                            Título
+                        <th onClick={() => handleSort('titulo')}
+                            className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                            {sortConfig && sortConfig.key === 'titulo' && (
+                                <span>{sortConfig.direction === 'asc' ? '🔼' : '🔽'}</span>
+                            )}
+                            {' '} Título
                         </th>
-                        <th className="min-w-[320px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                            Descripción
+                        <th onClick={() => handleSort('descripcion')}
+                            className="min-w-[320px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                            {sortConfig && sortConfig.key === 'descripcion' && (
+                                <span>{sortConfig.direction === 'asc' ? '🔼' : '🔽'}</span>
+                            )}
+                            {' '} Descripción
                         </th>
-                        <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                            Tipo de Denuncia
+                        <th onClick={() => handleSort('tipoDenuncia')}
+                            className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                            {sortConfig && sortConfig.key === 'tipoDenuncia' && (
+                                <span>{sortConfig.direction === 'asc' ? '🔼' : '🔽'}</span>
+                            )}
+                            {' '} Tipo de Denuncia
                         </th>
-                        <th className="min-w-[100px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                            Estado
+                        <th onClick={() => handleSort('estado')}
+                            className="min-w-[100px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                            {sortConfig && sortConfig.key === 'estado' && (
+                                <span>{sortConfig.direction === 'asc' ? '🔼' : '🔽'}</span>
+                            )}
+                            {' '} Estado
                         </th>
                         <th className="min-w-[100px] py-4 px-4 font-medium text-black dark:text-white">
                             Acciones
@@ -272,6 +309,13 @@ const Denuncias = () => {
                                                     Ver
                                                 </Link>
                                             </button>
+
+                                            <div>
+                                                <button onClick={() => openModal(denuncia)}>Ver detalles de la
+                                                    denuncia
+                                                </button>
+                                            </div>
+
                                             {/*<button*/}
                                             {/*    onClick={() => editarDenuncia(denuncia.titulo)}*/}
                                             {/*    className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2"*/}
@@ -288,9 +332,13 @@ const Denuncias = () => {
                                     </td>
                                 </tr>
                             ))}
+
                     </tbody>
                 </table>
             </div>
+            {showModal && selectedDenuncia && (
+                <DenunciaModal denuncia={selectedDenuncia} closeModal={closeModal}/>
+            )}
         </div>
     );
 };

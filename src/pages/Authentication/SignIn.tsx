@@ -1,9 +1,19 @@
-import React, { useContext, useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
-import { GeneralContext } from '../api/GeneralContext';
+import Logo from "../../images/logo/logocolor.png";
+
+interface Funcionario {
+    id: string;
+    apellido: string;
+    celular: string;
+    ci: string;
+    correo: string;
+    nombre: string;
+    departamento: string;
+    nombreDepartamento: string;
+}
 
 const SignIn = () => {
-    const { isLoggedIn, setIsLoggedIn } = useContext(GeneralContext);
     const [correo, setCorreo] = useState('');
     const [contrasena, setContrasena] = useState('');
 
@@ -24,15 +34,28 @@ const SignIn = () => {
                 contrasena,
             });
 
+            console.log(response);
+
             if (response.data.success) {
-                setIsLoggedIn(true);
                 console.log('Inicio de sesión exitoso');
 
-                // window.location.reload(); // Recargar la página actual
-                console.log("isLoggedIn : " + isLoggedIn);
+                console.log("logged : " + true);
+                const funcionario : Funcionario =  response.data.data;
+                console.log("Funcionario> " + JSON.stringify(funcionario))
+
+                localStorage.setItem('logged', 'true');
+                localStorage.setItem('nombre', funcionario.nombre);
+                localStorage.setItem('nombreDepartamento', funcionario.nombreDepartamento);
+                localStorage.setItem('departamento', funcionario.departamento);
+                localStorage.setItem('correo', funcionario.correo);
+                localStorage.setItem('id', funcionario.id);
+
+                window.location.href = "/";
 
             } else {
-                setIsLoggedIn(false);
+                console.log("logged : " + false);
+                localStorage.setItem('logged', 'false');
+
                 console.log('Credenciales incorrectas');
             }
         } catch (error) {
@@ -41,11 +64,14 @@ const SignIn = () => {
     };
 
     return (
-        <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
-                <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
+        <div className="flex justify-center items-center h-screen">
+            <div className="w-2/3 bg-gray-100 rounded p-8 flex">
+                <div className="w-1/2 pr-8">
+                    <img src={Logo} alt="Logo" className="max-w-full max-h-full"/>
+                </div>
+                <div className="w-1/2 pl-8">
                     <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                        Iniciar Sesión
+                        Acceso Funcionarios
                     </h2>
 
                     <form onSubmit={handleSubmit}>

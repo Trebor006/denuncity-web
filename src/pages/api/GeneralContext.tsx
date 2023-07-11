@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useState } from 'react';
+import React, {createContext, ReactNode, useState} from 'react';
 
 interface GeneralContextProps {
     filtroEstado: string;
@@ -10,12 +10,16 @@ interface GeneralContextProps {
     setFechaFin: (fecha: string) => void;
     setTipoDenuncia: (tipo: string) => void;
 
+    id: string|null;
+    nombre: string|null;
     correo: string;
-    departamento: string;
-    isLoggedIn: boolean;
+    departamento: string|null;
+    nombreDepartamento: string|null;
+    setId: (nombre: string) => void;
+    setNombre: (nombre: string) => void;
     setCorreo: (correo: string) => void;
+    setNombreDepartamento: (nombreDepartamento: string) => void;
     setDepartamento: (departamento: string) => void;
-    setIsLoggedIn: (isLoggedIn: boolean) => void;
 }
 
 export const GeneralContext = createContext<GeneralContextProps>({
@@ -33,28 +37,39 @@ export const GeneralContext = createContext<GeneralContextProps>({
     },
 
 
+    id: '',
+    nombre: '',
     correo: '',
     departamento: '',
-    isLoggedIn: false,
-    setCorreo: () => {},
-    setDepartamento: () => {},
-    setIsLoggedIn: () => {},
+    nombreDepartamento: '',
+    setId: () => {
+    },
+    setCorreo: () => {
+    },
+    setDepartamento: () => {
+    },
+    setNombreDepartamento: () => {
+    },
+    setNombre: () => {
+    },
 });
 
 interface GeneralProviderProps {
     children: ReactNode;
 }
 
-export const GeneralProvider = ({ children }: GeneralProviderProps) => {
+export const GeneralProvider = ({children}: GeneralProviderProps) => {
     const [filtroEstado, setFiltroEstado] = useState('');
     const [fechaInicio, setFechaInicio] = useState('');
     const [fechaFin, setFechaFin] = useState('');
     const [tipoDenuncia, setTipoDenuncia] = useState('');
 
 
+    const [nombre, setNombre] = useState(!localStorage.getItem('nombre') ? '' : localStorage.getItem('nombre'));
     const [correo, setCorreo] = useState('');
-    const [departamento, setDepartamento] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [nombreDepartamento, setNombreDepartamento] = useState(!localStorage.getItem('nombreDepartamento') ? '' : localStorage.getItem('nombreDepartamento'));
+    const [departamento, setDepartamento] = useState(!localStorage.getItem('departamento') ? '' : localStorage.getItem('departamento'));
+    const [id, setId] = useState(!localStorage.getItem('id') ? '' : localStorage.getItem('id'));
 
     return (
         <GeneralContext.Provider
@@ -68,12 +83,16 @@ export const GeneralProvider = ({ children }: GeneralProviderProps) => {
                 setFechaFin,
                 setTipoDenuncia,
 
+                id,
+                nombre,
                 correo,
                 departamento,
-                isLoggedIn,
+                nombreDepartamento,
+                setId,
                 setCorreo,
                 setDepartamento,
-                setIsLoggedIn,
+                setNombreDepartamento,
+                setNombre,
             }}
         >
             {children}
