@@ -12,10 +12,8 @@ interface GeneralContextProps {
 
     correo: string;
     departamento: string;
-    isLoggedIn: boolean;
     setCorreo: (correo: string) => void;
     setDepartamento: (departamento: string) => void;
-    setIsLoggedIn: (isLoggedIn: boolean) => void;
 }
 
 export const GeneralContext = createContext<GeneralContextProps>({
@@ -35,10 +33,8 @@ export const GeneralContext = createContext<GeneralContextProps>({
 
     correo: '',
     departamento: '',
-    isLoggedIn: false,
     setCorreo: () => {},
     setDepartamento: () => {},
-    setIsLoggedIn: () => {},
 });
 
 interface GeneralProviderProps {
@@ -54,7 +50,6 @@ export const GeneralProvider = ({ children }: GeneralProviderProps) => {
 
     const [correo, setCorreo] = useState('');
     const [departamento, setDepartamento] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     return (
         <GeneralContext.Provider
@@ -70,10 +65,8 @@ export const GeneralProvider = ({ children }: GeneralProviderProps) => {
 
                 correo,
                 departamento,
-                isLoggedIn,
                 setCorreo,
                 setDepartamento,
-                setIsLoggedIn,
             }}
         >
             {children}

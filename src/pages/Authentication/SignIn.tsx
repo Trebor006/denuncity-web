@@ -1,10 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
-import { GeneralContext } from '../api/GeneralContext';
 import Logo from "../../images/logo/logocolor.png";
 
 const SignIn = () => {
-    const { isLoggedIn, setIsLoggedIn } = useContext(GeneralContext);
     const [correo, setCorreo] = useState('');
     const [contrasena, setContrasena] = useState('');
 
@@ -25,15 +23,19 @@ const SignIn = () => {
                 contrasena,
             });
 
+            console.log(response);
+
             if (response.data.success) {
-                setIsLoggedIn(true);
                 console.log('Inicio de sesión exitoso');
 
-                // window.location.reload(); // Recargar la página actual
-                console.log("isLoggedIn : " + isLoggedIn);
+                console.log("logged : " + true);
+                localStorage.setItem('logged', 'true');
+                window.location.href = "/";
 
             } else {
-                setIsLoggedIn(false);
+                console.log("logged : " + false);
+                localStorage.setItem('logged', 'false');
+
                 console.log('Credenciales incorrectas');
             }
         } catch (error) {
