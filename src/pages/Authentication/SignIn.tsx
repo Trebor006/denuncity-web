@@ -2,6 +2,17 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import Logo from "../../images/logo/logocolor.png";
 
+interface Funcionario {
+    id: string;
+    apellido: string;
+    celular: string;
+    ci: string;
+    correo: string;
+    nombre: string;
+    departamento: string;
+    nombreDepartamento: string;
+}
+
 const SignIn = () => {
     const [correo, setCorreo] = useState('');
     const [contrasena, setContrasena] = useState('');
@@ -29,7 +40,16 @@ const SignIn = () => {
                 console.log('Inicio de sesión exitoso');
 
                 console.log("logged : " + true);
+                const funcionario : Funcionario =  response.data.data;
+                console.log("Funcionario> " + JSON.stringify(funcionario))
+
                 localStorage.setItem('logged', 'true');
+                localStorage.setItem('nombre', funcionario.nombre);
+                localStorage.setItem('nombreDepartamento', funcionario.nombreDepartamento);
+                localStorage.setItem('departamento', funcionario.departamento);
+                localStorage.setItem('correo', funcionario.correo);
+                localStorage.setItem('id', funcionario.id);
+
                 window.location.href = "/";
 
             } else {

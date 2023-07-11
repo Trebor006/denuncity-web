@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useState } from 'react';
+import React, {createContext, ReactNode, useState} from 'react';
 
 interface GeneralContextProps {
     filtroEstado: string;
@@ -10,9 +10,15 @@ interface GeneralContextProps {
     setFechaFin: (fecha: string) => void;
     setTipoDenuncia: (tipo: string) => void;
 
+    id: string|null;
+    nombre: string|null;
     correo: string;
-    departamento: string;
+    departamento: string|null;
+    nombreDepartamento: string|null;
+    setId: (nombre: string) => void;
+    setNombre: (nombre: string) => void;
     setCorreo: (correo: string) => void;
+    setNombreDepartamento: (nombreDepartamento: string) => void;
     setDepartamento: (departamento: string) => void;
 }
 
@@ -31,25 +37,39 @@ export const GeneralContext = createContext<GeneralContextProps>({
     },
 
 
+    id: '',
+    nombre: '',
     correo: '',
     departamento: '',
-    setCorreo: () => {},
-    setDepartamento: () => {},
+    nombreDepartamento: '',
+    setId: () => {
+    },
+    setCorreo: () => {
+    },
+    setDepartamento: () => {
+    },
+    setNombreDepartamento: () => {
+    },
+    setNombre: () => {
+    },
 });
 
 interface GeneralProviderProps {
     children: ReactNode;
 }
 
-export const GeneralProvider = ({ children }: GeneralProviderProps) => {
+export const GeneralProvider = ({children}: GeneralProviderProps) => {
     const [filtroEstado, setFiltroEstado] = useState('');
     const [fechaInicio, setFechaInicio] = useState('');
     const [fechaFin, setFechaFin] = useState('');
     const [tipoDenuncia, setTipoDenuncia] = useState('');
 
 
+    const [nombre, setNombre] = useState(!localStorage.getItem('nombre') ? '' : localStorage.getItem('nombre'));
     const [correo, setCorreo] = useState('');
-    const [departamento, setDepartamento] = useState('');
+    const [nombreDepartamento, setNombreDepartamento] = useState(!localStorage.getItem('nombreDepartamento') ? '' : localStorage.getItem('nombreDepartamento'));
+    const [departamento, setDepartamento] = useState(!localStorage.getItem('departamento') ? '' : localStorage.getItem('departamento'));
+    const [id, setId] = useState(!localStorage.getItem('id') ? '' : localStorage.getItem('id'));
 
     return (
         <GeneralContext.Provider
@@ -63,10 +83,16 @@ export const GeneralProvider = ({ children }: GeneralProviderProps) => {
                 setFechaFin,
                 setTipoDenuncia,
 
+                id,
+                nombre,
                 correo,
                 departamento,
+                nombreDepartamento,
+                setId,
                 setCorreo,
                 setDepartamento,
+                setNombreDepartamento,
+                setNombre,
             }}
         >
             {children}
