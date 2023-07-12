@@ -24,7 +24,7 @@ const DenunciaComponent = () => {
         const cargarDenuncia = async () => {
             if (id) {
                 try {
-                    const response = await axios.get(`http://localhost:3001/denuncias/buscar?id=${id}`);
+                    const response = await axios.get(`https://denuncity-backend-app-in7v2.ondigitalocean.app/denuncias/buscar?id=${id}`);
                     const denuncia: Denuncia = response.data;
 
                     console.log('Denuncia: ' + JSON.stringify(denuncia));
@@ -94,11 +94,11 @@ const DenunciaComponent = () => {
             };
 
             if (isEditing && id) {
-                const response = await axios.put(`http://localhost:3001/denuncias/${id}`, denunciaData);
+                const response = await axios.put(`https://denuncity-backend-app-in7v2.ondigitalocean.app/denuncias/${id}`, denunciaData);
                 toast.success('Denuncia actualizada exitosamente');
                 console.log('Respuesta del servidor:', response.data);
             } else {
-                const response = await axios.post('http://localhost:3001/denuncias/registrar', denunciaData);
+                const response = await axios.post('https://denuncity-backend-app-in7v2.ondigitalocean.app/denuncias/registrar', denunciaData);
                 toast.success('Denuncia registrada exitosamente');
                 console.log('Respuesta del servidor:', response.data);
             }
