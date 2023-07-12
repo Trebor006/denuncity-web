@@ -8,5 +8,7 @@ export interface Denuncia {
     imagenesUrls: string[];
 
     _id: string;
+    lon: string;
+    lat: string;
     createdAt: string;
 }
