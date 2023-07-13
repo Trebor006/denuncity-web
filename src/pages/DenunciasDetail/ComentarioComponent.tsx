@@ -1,16 +1,18 @@
 import React, {useState} from 'react';
 import {ComentarioDto} from '../../structure/comentario-dto';
 import {GrClose} from "react-icons/gr";
+import CambiarEstado from "./CambiarEstado";
 
 interface ComentarioComponentProps {
     id: string | undefined;
+    estadoDenuncia: string | undefined;
     comentarios: ComentarioDto[] | undefined;
     actualizarComentarios: () => void;
-
 }
 
-const ComentarioComponent = ({id, comentarios, actualizarComentarios}: ComentarioComponentProps) => {
+const ComentarioComponent = ({id, comentarios, estadoDenuncia, actualizarComentarios}: ComentarioComponentProps) => {
     const [showModal, setShowModal] = useState(false);
+    const [showCambiarEstadoModal, setShowCambiarEstadoModal] = useState(false);
     const [nuevoComentario, setNuevoComentario] = useState({
         funcionario: '',
         departamento: '',
@@ -54,6 +56,47 @@ const ComentarioComponent = ({id, comentarios, actualizarComentarios}: Comentari
         setShowModal(false);
     }
 
+    function closeModalEstadoModal() {
+        setShowCambiarEstadoModal(false);
+    }
+
+    const actualizarEstado = (estado: string, comentario: string) => {
+        // Lógica para actualizar el estado en el componente padre
+        console.log('Nuevo estado:', estado);
+        console.log('Nuevo comentario:', comentario);
+        // Realiza las acciones necesarias con el estado y comentario
+
+
+        const url = `http://localhost:3001/denuncias/actualizarEstado?id=${id}`;
+
+        nuevoComentario.funcionario = localStorage.getItem('nombre') || '';
+        nuevoComentario.departamento = localStorage.getItem('departamento') || '';
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                {
+                    funcionario: nuevoComentario.funcionario,
+                    departamento: nuevoComentario.departamento,
+                    comentario: comentario,
+                    estado: estado,
+                }
+            ),
+        })
+            .then((response) => {
+                setShowCambiarEstadoModal(false);
+                actualizarComentarios();
+            })
+            .catch((error) => {
+                // Manejar errores
+                console.error('Error al llamar al servicio en el backend:', error);
+            });
+    };
+
+
     return (
         <div className="container mx-auto py-4">
             <h1 className="text-2xl font-bold mb-4">Lista de Comentarios</h1>
@@ -63,6 +106,16 @@ const ComentarioComponent = ({id, comentarios, actualizarComentarios}: Comentari
             >
                 Agregar Comentario
             </button>
+
+            {estadoDenuncia !== 'RECHAZADA' &&
+                estadoDenuncia !== 'PROCESADA' &&
+                <button
+                    className="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => setShowCambiarEstadoModal(true)}
+                >
+                    Cambiar Estado
+                </button>
+            }
 
 
             <ul className="space-y-2">
@@ -81,7 +134,7 @@ const ComentarioComponent = ({id, comentarios, actualizarComentarios}: Comentari
             {showModal && (
                 <div className="fixed inset-0 flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg p-8 max-w-md w-full border ">
-                        <button onClick={closeModal} className="relative right-0 float-right " ><GrClose /></button>
+                        <button onClick={closeModal} className="relative right-0 float-right "><GrClose/></button>
                         <h2 className="text-lg font-bold mb-4">Agregar Comentario</h2>
                         <form>
                             <div className="mb-4">
@@ -108,6 +161,12 @@ const ComentarioComponent = ({id, comentarios, actualizarComentarios}: Comentari
                     </div>
                 </div>
             )}
+
+            {showCambiarEstadoModal &&
+                <CambiarEstado id={id} actualizarEstado={actualizarEstado}
+                               closeModalEstadoModal={closeModalEstadoModal}/>
+
+            }
         </div>
     );
 };

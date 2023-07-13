@@ -269,7 +269,7 @@ const DenunciaComponent = () => {
                     <div id="map" style={{height: '500px'}}></div>
                 </div>
                 <div className="w-1/3 pl-4">
-                    <ComentarioComponent comentarios={comentarios} id={id} actualizarComentarios={actualizarComentarios}/>
+                    <ComentarioComponent comentarios={comentarios} id={id} estadoDenuncia={estado} actualizarComentarios={actualizarComentarios}/>
                 </div>
             </div>
         </div>
