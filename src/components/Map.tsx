@@ -24,7 +24,7 @@ const Map = () => {
     const [denuncias, setDenuncias] = useState<DenunciaAllDTO[]>([]);
     const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(null);
 
-    const { filtroEstado, fechaInicio, fechaFin, tipoDenuncia } = useContext(GeneralContext);
+    const { filtroEstado, fechaInicio, fechaFin, tipoDenuncia, setDenunciasFiltradas } = useContext(GeneralContext);
 
     useEffect(() => {
         console.log(filtroEstado, fechaInicio, fechaFin, tipoDenuncia);
@@ -38,6 +38,7 @@ const Map = () => {
                 tipoDenuncia
             );
             setDenuncias(denunciasData);
+            setDenunciasFiltradas(denunciasData);
         };
         getDenuncias();
     }, [filtroEstado, fechaInicio, fechaFin, tipoDenuncia]);

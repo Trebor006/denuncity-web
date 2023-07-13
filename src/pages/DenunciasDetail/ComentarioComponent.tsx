@@ -1,5 +1,6 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {ComentarioDto} from '../../structure/comentario-dto';
+import {GrClose} from "react-icons/gr";
 
 interface ComentarioComponentProps {
     id: string | undefined;
@@ -49,6 +50,10 @@ const ComentarioComponent = ({id, comentarios, actualizarComentarios}: Comentari
             });
     };
 
+    function closeModal() {
+        setShowModal(false);
+    }
+
     return (
         <div className="container mx-auto py-4">
             <h1 className="text-2xl font-bold mb-4">Lista de Comentarios</h1>
@@ -74,9 +79,9 @@ const ComentarioComponent = ({id, comentarios, actualizarComentarios}: Comentari
             </ul>
 
             {showModal && (
-                <div
-                    className="fixed border-2 top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
-                    <div className="bg-white p-6 rounded-lg">
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-lg p-8 max-w-md w-full border ">
+                        <button onClick={closeModal} className="relative right-0 float-right " ><GrClose /></button>
                         <h2 className="text-lg font-bold mb-4">Agregar Comentario</h2>
                         <form>
                             <div className="mb-4">
@@ -87,6 +92,7 @@ const ComentarioComponent = ({id, comentarios, actualizarComentarios}: Comentari
                                     className="border border-gray-300 rounded-md px-3 py-2 w-full"
                                     id="comentario"
                                     name="comentario"
+                                    style={{height: '250px'}}
                                     value={nuevoComentario.comentario}
                                     onChange={handleInputChange}
                                 />

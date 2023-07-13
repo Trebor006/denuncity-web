@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import DenunciaModal from "../../components/DenunciaModal";
 import {Denuncia} from "../../structure/denuncia";
 import {IoChevronBackOutline, IoChevronForwardOutline, IoEyeSharp} from "react-icons/io5";
+import io from 'socket.io-client';
 import {BiDetail} from "react-icons/bi";
 
 interface TipoDenuncia {
@@ -26,6 +27,7 @@ interface estados {
 
 const dataEstados: estados[] = [
     {id: '', nombre: '-- Selecionar Estado --'},
+    {id: 'PENDIENTE', nombre: 'PENDIENTE'},
     {id: 'ACEPTADA', nombre: 'ACEPTADA'},
     {id: 'RECHAZADA', nombre: 'RECHAZADA'},
     {id: 'PROCESADA', nombre: 'PROCESADA'},
@@ -47,6 +49,22 @@ const Denuncias = () => {
     const [total, setTotal] = useState<number>(0);
     const [renderPagination, setRenderPagination] = useState<boolean>(false);
     const [selectedDenuncia, setSelectedDenuncia] = useState<Denuncia | undefined>();
+
+    //todo SockeT!!!
+    // useEffect(() => {
+    //     const socket = io('http://localhost:3001');
+    //
+    //     socket.on('nuevaDenuncia', handleInsertEvent);
+    //
+    //     return () => {
+    //         socket.disconnect();
+    //     };
+    // }, []);
+    //
+    // const handleInsertEvent = (data: Denuncia) => {
+    //     setDenuncias((prevDatos) => [data, ...prevDatos]);
+    // };
+
 
     useEffect(() => {
         obtenerTiposDenuncia();
@@ -92,6 +110,7 @@ const Denuncias = () => {
 
 
     const filtrarDenuncias = async () => {
+        setRenderPagination(false);
         try {
             console.log("paginacion");
             console.log(page);
@@ -212,6 +231,11 @@ const Denuncias = () => {
                         Filtrar
                     </button>
                 </div>
+
+                {/*{*/}
+                {/*    renderPagination && <BotonesPaginacion total={total} page={page} pageSize={pageSize} cambiarPagina={cambiarPagina}/>*/}
+                {/*}*/}
+
                 <div className="flex space-x-2">
 
                     <button

@@ -1,6 +1,7 @@
 import Map from "../../components/Map";
 import MapFilter from "../../components/MapFilter";
 import PublicLayout from "../../layout/PublicLayout";
+import EstadisticasDenuncia from "../../components/EstadisticasDenuncia";
 
 const MapLayout = () => {
 
@@ -13,7 +14,9 @@ const MapLayout = () => {
                 <div className="w-3/4">
                     <Map/>
                 </div>
+
             </div>
+            <EstadisticasDenuncia />
         </PublicLayout>
     );
 };
