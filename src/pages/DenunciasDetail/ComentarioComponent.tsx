@@ -26,7 +26,7 @@ const ComentarioComponent = ({id, comentarios, actualizarComentarios}: Comentari
     const handleGuardar = () => {
         const url = `http://localhost:3001/denuncias/agregarComentario?id=${id}`;
 
-        nuevoComentario.funcionario = localStorage.getItem('funcionario') || '';
+        nuevoComentario.funcionario = localStorage.getItem('nombre') || '';
         nuevoComentario.departamento = localStorage.getItem('departamento') || '';
 
         fetch(url, {

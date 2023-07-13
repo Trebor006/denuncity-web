@@ -3,6 +3,8 @@ import axios from 'axios';
 import {Link} from "react-router-dom";
 import DenunciaModal from "../../components/DenunciaModal";
 import {Denuncia} from "../../structure/denuncia";
+import {IoChevronBackOutline, IoChevronForwardOutline, IoEyeSharp} from "react-icons/io5";
+import {BiDetail} from "react-icons/bi";
 
 interface TipoDenuncia {
     id: number;
@@ -217,7 +219,7 @@ const Denuncias = () => {
                         disabled={page === 1}
                         className="bg-primary text-white rounded px-4 py-2 font-medium"
                     >
-                        &lt;
+                        <IoChevronBackOutline/>
                     </button>
                     {renderPagination && renderizarBotonesPaginas()}
                     <button
@@ -225,7 +227,7 @@ const Denuncias = () => {
                         disabled={page >= total}
                         className="bg-primary text-white rounded px-4 py-2 font-medium"
                     >
-                        &gt;
+                        <IoChevronForwardOutline/>
                     </button>
                 </div>
             </div>
@@ -284,7 +286,7 @@ const Denuncias = () => {
                                 <tr key={denuncia._id}>
                                     <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                                         <h5 className="font-medium text-black dark:text-white">
-                                            <img src={denuncia.imagenesUrls[0]} />
+                                            <img src={denuncia.imagenesUrls[0]}/>
                                         </h5>
                                     </td>
                                     <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
@@ -314,13 +316,13 @@ const Denuncias = () => {
                                         <div className="flex items-center space-x-3.5">
                                             <button>
                                                 <Link to={`/denuncias-detail/ver/${denuncia._id}`}>
-                                                    Ver
+                                                    <IoEyeSharp/>
                                                 </Link>
                                             </button>
 
                                             <div>
-                                                <button onClick={() => openModal(denuncia)}>Ver detalles de la
-                                                    denuncia
+                                                <button onClick={() => openModal(denuncia)}>
+                                                    <BiDetail/>
                                                 </button>
                                             </div>
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {Link} from "react-router-dom";
+import {IoEyeSharp} from "react-icons/io5";
 
 // Interfaz para el tipo de denuncia
 interface TipoDenuncia {
@@ -89,7 +90,7 @@ const TipoDenuncias = () => {
                                 <div className="flex items-center space-x-3.5">
                                     <button>
                                         <Link to={`/complaintstype/ver/${tipoDenuncia.id}`}>
-                                            Ver
+                                            <IoEyeSharp />
                                         </Link>
                                     </button>
                                 </div>
