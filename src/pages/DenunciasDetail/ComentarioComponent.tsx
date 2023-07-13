@@ -67,7 +67,7 @@ const ComentarioComponent = ({id, comentarios, estadoDenuncia, actualizarComenta
         // Realiza las acciones necesarias con el estado y comentario
 
 
-        const url = `http://localhost:3001/denuncias/actualizarEstado?id=${id}`;
+        const url = `https://denuncity-backend-app-in7v2.ondigitalocean.app/denuncias/actualizarEstado?id=${id}`;
 
         nuevoComentario.funcionario = localStorage.getItem('nombre') || '';
         nuevoComentario.departamento = localStorage.getItem('departamento') || '';
