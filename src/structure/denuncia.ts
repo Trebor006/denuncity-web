@@ -1,3 +1,5 @@
+import {ComentarioDto} from "./comentario-dto";
+
 export interface Denuncia {
     correo: string;
     titulo: string;
@@ -11,4 +13,5 @@ export interface Denuncia {
     lon: string;
     lat: string;
     createdAt: string;
+    comentarios: ComentarioDto[] | undefined;
 }
