@@ -80,7 +80,7 @@ const Denuncias = () => {
 
     const obtenerTiposDenuncia = async () => {
         try {
-            const response = await fetch('http://localhost:3001/tipo-denuncias');
+            const response = await fetch('http://localhost:3001/tipo-denuncias/porDepartamento?departamento=' + localStorage.getItem('departamento'));
             const data = await response.json();
             setTiposDenuncia(data);
         } catch (error) {
@@ -118,7 +118,8 @@ const Denuncias = () => {
             const response = await axios.get<DenunciaResult>('http://localhost:3001/denuncias/busquedaPaginada', {
                 params: {
                     ...filtros, pagina: page, porPagina: pageSize,
-                    ordenadoPor: sortConfig.key, ordenadoDir: sortConfig.direction === 'asc' ? 1 : -1
+                    ordenadoPor: sortConfig.key, ordenadoDir: sortConfig.direction === 'asc' ? 1 : -1,
+                    departamento: localStorage.getItem('departamento')
                 }
             });
             const denunciasResult = response.data;
