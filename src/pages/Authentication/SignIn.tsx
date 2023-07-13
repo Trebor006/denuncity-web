@@ -44,7 +44,7 @@ const SignIn = () => {
                 console.log("Funcionario> " + JSON.stringify(funcionario))
 
                 localStorage.setItem('logged', 'true');
-                localStorage.setItem('nombre', funcionario.nombre);
+                localStorage.setItem('nombre', funcionario.nombre + ' ' + funcionario.apellido);
                 localStorage.setItem('nombreDepartamento', funcionario.nombreDepartamento);
                 localStorage.setItem('departamento', funcionario.departamento);
                 localStorage.setItem('correo', funcionario.correo);

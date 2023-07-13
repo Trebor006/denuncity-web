@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {Link} from "react-router-dom";
+import {IoEyeSharp} from "react-icons/io5";
 
 interface Funcionario {
     id: number;
@@ -98,7 +99,7 @@ const Funcionarios = () => {
                                 <div className="flex items-center space-x-3.5">
                                     <button>
                                         <Link to={`/funcionarios/ver/${funcionario.id}`}>
-                                            Ver
+                                            <IoEyeSharp />
                                         </Link>
                                     </button>
                                 </div>

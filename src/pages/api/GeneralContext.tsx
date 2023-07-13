@@ -1,20 +1,23 @@
 import React, {createContext, ReactNode, useState} from 'react';
+import {DenunciaAllDTO} from "../../structure/denunciaAll-dto";
 
 interface GeneralContextProps {
     filtroEstado: string;
+    denunciasFiltradas: DenunciaAllDTO[];
     fechaInicio: string;
     fechaFin: string;
     tipoDenuncia: string;
+    setDenunciasFiltradas: (denunciasFiltradas: DenunciaAllDTO[]) => void;
     setFiltroEstado: (estado: string) => void;
     setFechaInicio: (fecha: string) => void;
     setFechaFin: (fecha: string) => void;
     setTipoDenuncia: (tipo: string) => void;
 
-    id: string|null;
-    nombre: string|null;
+    id: string | null;
+    nombre: string | null;
     correo: string;
-    departamento: string|null;
-    nombreDepartamento: string|null;
+    departamento: string | null;
+    nombreDepartamento: string | null;
     setId: (nombre: string) => void;
     setNombre: (nombre: string) => void;
     setCorreo: (correo: string) => void;
@@ -24,9 +27,12 @@ interface GeneralContextProps {
 
 export const GeneralContext = createContext<GeneralContextProps>({
     filtroEstado: '',
+    denunciasFiltradas: [],
     fechaInicio: '',
     fechaFin: '',
     tipoDenuncia: '',
+    setDenunciasFiltradas: () => {
+    },
     setFiltroEstado: () => {
     },
     setFechaInicio: () => {
@@ -63,7 +69,7 @@ export const GeneralProvider = ({children}: GeneralProviderProps) => {
     const [fechaInicio, setFechaInicio] = useState('');
     const [fechaFin, setFechaFin] = useState('');
     const [tipoDenuncia, setTipoDenuncia] = useState('');
-
+    const [denunciasFiltradas, setDenunciasFiltradas] = useState<DenunciaAllDTO[]>([]);
 
     const [nombre, setNombre] = useState(!localStorage.getItem('nombre') ? '' : localStorage.getItem('nombre'));
     const [correo, setCorreo] = useState('');
@@ -74,10 +80,12 @@ export const GeneralProvider = ({children}: GeneralProviderProps) => {
     return (
         <GeneralContext.Provider
             value={{
+                denunciasFiltradas,
                 filtroEstado,
                 fechaInicio,
                 fechaFin,
                 tipoDenuncia,
+                setDenunciasFiltradas,
                 setFiltroEstado,
                 setFechaInicio,
                 setFechaFin,

@@ -3,6 +3,7 @@ import {Denuncia} from "../structure/denuncia";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import {GrClose} from "react-icons/gr";
 
 interface DenunciaModalProps {
     denuncia: Denuncia,
@@ -16,7 +17,7 @@ const DenunciaModal = ({denuncia, closeModal}: DenunciaModalProps) => {
         <div className="fixed inset-0 flex items-center justify-center z-50">
 
             <div className="bg-white rounded-lg p-8 max-w-md w-full border ">
-                <button onClick={closeModal} className="relative right-0 float-right " >X</button>
+                <button onClick={closeModal} className="relative right-0 float-right " ><GrClose /></button>
                 <h2 className="text-xl font-semibold mb-4">Detalles de la denuncia</h2>
                 <p><strong>Correo:</strong> {correo}</p>
                 <p><strong>Título:</strong> {titulo}</p>

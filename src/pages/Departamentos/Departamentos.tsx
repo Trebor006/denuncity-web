@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
+import {IoEyeSharp} from "react-icons/io5";
 
 
 // Interfaz para el departamento
@@ -80,7 +81,7 @@ const Departamentos = () => {
                                 <div className="flex items-center space-x-3.5">
                                     <button onClick={() => verDepartamento(departamento.id)}>
                                         <Link to={`/departaments/ver/${departamento.id}`}>
-                                            Ver
+                                            <IoEyeSharp />
                                         </Link>
                                     </button>
                                     {/*<button onClick={() => editarDepartamento(departamento.id)}>*/}

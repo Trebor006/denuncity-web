@@ -1,13 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Route, Routes} from 'react-router-dom';
 import SignIn from './pages/Authentication/SignIn';
-import SignUp from './pages/Authentication/SignUp';
-import Chart from './pages/Chart';
-import Profile from './pages/Profile';
-import Settings from './pages/Settings';
-import Tables from './pages/Tables';
-import Alerts from './pages/UiElements/Alerts';
-import Buttons from './pages/UiElements/Buttons';
 import MapLayout from "./pages/Maps/MapLayout";
 import DepartmentForm from "./pages/Departamentos/DepartmentForm";
 import TipoDenunciaForm from "./pages/TipoDenuncias/TipoDenunciaForm";
@@ -46,13 +39,6 @@ function App() {
                     <Route path="/" element={<MapLayout/>}/>
                     <Route path="/login" element={<SignIn/>}/>
                     <Route path="/denuncias-detail" element={<DenunciasDetails/>}/>
-                    <Route path="/profile" element={<Profile/>}/>
-                    <Route path="/tables" element={<Tables/>}/>
-                    <Route path="/settings" element={<Settings/>}/>
-                    <Route path="/chart" element={<Chart/>}/>
-                    <Route path="/ui/alerts" element={<Alerts/>}/>
-                    <Route path="/ui/buttons" element={<Buttons/>}/>
-                    <Route path="/auth/signup" element={<SignUp/>}/>
                 </Routes>
                 :
                 <Routes>
@@ -79,13 +65,6 @@ function App() {
                     <Route path="/denuncias-detail/ver/:id" element={<DenunciaForm/>}/>
                     <Route path="/denuncias-detail/editar/:id" element={<DenunciaForm/>}/>
 
-                    <Route path="/profile" element={<Profile/>}/>
-                    <Route path="/tables" element={<Tables/>}/>
-                    <Route path="/settings" element={<Settings/>}/>
-                    <Route path="/chart" element={<Chart/>}/>
-                    <Route path="/ui/alerts" element={<Alerts/>}/>
-                    <Route path="/ui/buttons" element={<Buttons/>}/>
-                    <Route path="/auth/signup" element={<SignUp/>}/>
                 </Routes>
             }
         </>
